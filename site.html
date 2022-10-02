@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <title>
+            Hammingh code
+        </title>
+        <script>
+            function code(){
+                let mes = document.getElementById('inputMessage').value;
+                let f = 0;
+                for (let i in mes){
+                    if (mes[i]!='0' && mes[i]!='1'){
+                        return;
+                    }
+                }
+                if (mes.length!=4) {
+                    return;
+                }
+
+                let x1 = (parseInt(mes[0])+parseInt(mes[1])+parseInt(mes[3]))%2;
+                let x2 = (parseInt(mes[1])+parseInt(mes[2])+parseInt(mes[3]))%2;
+                let x3 = (parseInt(mes[0])+parseInt(mes[2])+parseInt(mes[3]))%2;
+                mes+=x1;
+                mes+=x2;
+                mes+=x3;
+                let output = document.getElementById('encodedMessage');
+                output.value = mes;
+            };
+
+            function decode(){
+                let mes = document.getElementById('inputMessage').value;
+                for (let i in mes){
+                    if (mes[i]!='0' && mes[i]!='1'){
+                        return;
+                    }
+                }
+                if (mes.length!=7) {
+                    return;
+                }
+                let x1 = (parseInt(mes[0])+parseInt(mes[1])+parseInt(mes[3]))%2;
+                let x2 = (parseInt(mes[1])+parseInt(mes[2])+parseInt(mes[3]))%2;
+                let x3 = (parseInt(mes[0])+parseInt(mes[2])+parseInt(mes[3]))%2;
+                let s1 = parseInt(mes[4]);
+                let s2 = parseInt(mes[5]);
+                let s3 = parseInt(mes[6]);
+                let ans = '';
+                if (x1 != s1) {
+                    if (x2 != s2 ){
+                        if (x3 != s3) {
+                            let c = (parseInt(es[3])+1)%2;
+                            ans = mes[0] + mes[1] +mes[2]+ c;
+                            
+                        } else{
+                            let c =  (parseInt(mes[1])+1)%2;
+                            ans = mes[0] + c + mes[2] + mes[3];
+                        }
+                        
+                    } else if (x3 != s3) {
+                        let c = (parseInt(mes[0])+1)%2;
+                        ans = c + mes[1] + mes[2] + mes[3];
+                    } else{
+                        ans = mes[0] + mes[1] + mes[2] + mes[3];
+                    }
+                } else if (x2!=s2) {
+                    if (x3!=s3) {
+                        let c = (parseInt(mes[2])+1)%2;
+                        ans = mes[0] + mes[1] + c + mes[3];
+                    } else{
+                        ans = mes[0] + mes[1] + mes[2] + mes[3];
+                    }
+                } else {
+                    ans = mes[0] + mes[1] + mes[2] + mes[3];
+                }
+                let output = document.getElementById('decodedMessage');
+                output.value = ans;
+            }
+        </script>
+    </head>
+    <body>
+        <h1>
+            Hammingh code
+        </h1>
+        <p><input type="text" id = 'inputMessage'/> four bites for encoding and seven for decoding </p>
+        <p><input type="button" value="To code" onclick="code()"/></p>
+        <p><input type="text" id = 'encodedMessage'/> encoded message</p>
+        <p><input type="button" value="To decode" onclick="decode()"/></p>
+        <p><input type="text" id = 'decodedMessage' /> decoded message</p>
+    </body>
+</html>
